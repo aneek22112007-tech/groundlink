@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Audit {{ mission.id }}</title>
+  <link rel="stylesheet" href="/static/mission.css">
+</head>
+<body>
+  <header>
+    <div>
+      <div class="wordmark">AUDIT</div>
+      <h1>{{ mission.id }}</h1>
+    </div>
+    <a href="/">Back to the room</a>
+  </header>
+  <main class="panel">
+    <pre class="log">{{ markdown }}</pre>
+    <p><a href="/api/report/{{ mission.id }}.md">Markdown</a> · <a href="/api/report/{{ mission.id }}.pdf">PDF</a></p>
+  </main>
+</body>
+</html>

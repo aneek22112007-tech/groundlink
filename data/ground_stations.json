@@ -1,0 +1,12 @@
+{
+  "stations": [
+    {
+      "id": "blr",
+      "name": "Bengaluru",
+      "lat_deg": 13.03,
+      "lon_deg": 77.51,
+      "alt_km": 0.92,
+      "min_elevation_deg": 5.0
+    }
+  ]
+}

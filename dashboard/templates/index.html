@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GroundLink — Kestrel-7</title>
+  <link rel="stylesheet" href="/static/mission.css">
+  <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="wordmark">GROUNDLINK</div>
+      <h1>Kestrel-7 mission room</h1>
+    </div>
+    <div class="mono">human authorises · agents propose</div>
+  </header>
+  <main id="board"
+        hx-get="/partials/board"
+        hx-trigger="every 2s"
+        hx-swap="innerHTML">
+    {% include "board.html" %}
+  </main>
+  <footer>Audit rows are hash-chained. A command leaves the queue only after the gate records an approval.</footer>
+  <script>
+    function drawChart() {
+      const node = document.getElementById("series");
+      const canvas = document.getElementById("chart");
+      if (!node || !canvas) return;
+      const samples = JSON.parse(node.textContent || "[]");
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = "rgba(142,246,255,0.85)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      samples.forEach((sample, index) => {
+        const x = samples.length < 2 ? 0 : (index / (samples.length - 1)) * (w - 16) + 8;
+        const volts = Math.max(20, Math.min(30, sample.bus_voltage));
+        const y = h - 16 - ((volts - 20) / 10) * (h - 32);
+        if (index === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+    document.addEventListener("DOMContentLoaded", drawChart);
+    document.body.addEventListener("htmx:afterSwap", drawChart);
+  </script>
+</body>
+</html>

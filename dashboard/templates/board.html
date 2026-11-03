@@ -1,0 +1,58 @@
+{% set mission = state.mission %}
+{% set sample = state.sample %}
+{% set window = state.pass %}
+<section class="grid" id="mission-grid">
+  <div class="panel">
+    <div class="wordmark">BUS</div>
+    {% if sample %}
+    <div class="stat"><span>Voltage</span><b class="{{ 'bad' if sample.bus_voltage < 24.8 else 'good' }}">{{ '%.2f'|format(sample.bus_voltage) }} V</b></div>
+    <div class="stat"><span>SOC</span><b>{{ '%.0f'|format(sample.battery_soc * 100) }}%</b></div>
+    <div class="stat"><span>Attitude</span><b>{{ '%.2f'|format(sample.attitude_err_deg) }} deg</b></div>
+    <div class="stat"><span>Wheels</span><b>{{ '%.0f'|format(sample.wheel_rpm) }} rpm</b></div>
+    <div class="stat"><span>Temp</span><b>{{ '%.1f'|format(sample.temp_c) }} C</b></div>
+    <div class="stat"><span>Comms</span><b class="{{ 'bad' if sample.comms_status == 'no_carrier' else '' }}">{{ sample.comms_status }}</b></div>
+    <div class="stat"><span>Fuel</span><b>{{ '%.3f'|format(sample.fuel_kg) }} kg</b></div>
+    <div class="ticker">{{ sample.ts }}</div>
+    {% else %}
+    <p>Waiting for the heartbeat.</p>
+    {% endif %}
+  </div>
+  <div class="panel">
+    <div class="wordmark">TELEMETRY</div>
+    <canvas id="chart" width="720" height="220"></canvas>
+    <script id="series" type="application/json">{{ state.samples | tojson }}</script>
+    <div>
+      {% for option in state.options %}
+      <span class="tag">{{ option.key }} {{ 'REV' if option.reversible else 'IRR' }} {{ '%.3f'|format(option.success_prob) }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="panel">
+    <div class="wordmark">PASS / GATE</div>
+    {% if mission %}
+    <div class="stat"><span>Mission</span><b>{{ mission.status }}</b></div>
+    <div class="stat"><span>Persistence</span><b>{{ 'on' if mission.persistence else 'off' }}</b></div>
+    <div class="stat"><span>Options</span><b>v{{ mission.option_version }}</b></div>
+    {% endif %}
+    {% if window.station %}
+    <div class="stat"><span>Station</span><b>{{ window.station }}</b></div>
+    <div class="stat"><span>Window</span><b class="{{ 'good' if window.open else 'warn' }}">{{ 'OPEN' if window.open else 'CLOSED' }}</b></div>
+    <div class="stat"><span>Countdown</span><b>{{ window.countdown_s }}</b></div>
+    <div class="stat"><span>AOS</span><b>{{ window.aos }}</b></div>
+    {% endif %}
+    <div class="stat"><span>Chain</span><b class="{{ 'good' if state.chain.ok else 'bad' }}">{{ state.chain.detail }}</b></div>
+    {% if mission %}
+    <p><a href="/audit/{{ mission.id }}">Who authorised this burn?</a></p>
+    {% endif %}
+    <div class="wordmark">COMMANDS</div>
+    {% for command in state.commands %}
+    <div class="stat"><span>{{ command.seq }} {{ command.step }}</span><b>{{ command.status }}</b></div>
+    {% endfor %}
+  </div>
+</section>
+<section class="panel log" style="margin-top:14px">
+  <div class="wordmark">ROOM</div>
+  {% for line in state.lines %}
+  <div><b>{{ line.who }}</b> <span class="ticker">{{ line.ts }}</span><br>{{ line.text }}</div>
+  {% endfor %}
+</section>
