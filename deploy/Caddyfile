@@ -1,0 +1,16 @@
+{
+	email {$CADDY_EMAIL}
+}
+
+{$SITE_HOST} {
+	encode gzip
+	handle /mm/* {
+		uri strip_prefix /mm
+		reverse_proxy 127.0.0.1:8065
+	}
+	handle /switch/* {
+		uri strip_prefix /switch
+		reverse_proxy 127.0.0.1:3000
+	}
+	reverse_proxy 127.0.0.1:8090
+}
