@@ -1,0 +1,15 @@
+version: 1
+name: Kestrel-7 mission room
+description: Anomaly response for Kestrel-7. Agents propose. Humans authorise.
+agents:
+  - name: context-agent
+    role: Summarise the anomaly and the next pass.
+  - name: options-agent
+    role: Propose three options with reversibility.
+  - name: action-agent
+    role: Queue commands and transmit only after the gate.
+participants:
+  - name: Priya Raman
+    role: flight_ops_engineer
+  - name: Arjun Mehta
+    role: mission_director
