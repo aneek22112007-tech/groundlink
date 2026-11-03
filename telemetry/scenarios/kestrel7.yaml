@@ -1,0 +1,31 @@
+# Kestrel-7 heartbeat. Times are seconds after 2026-07-14T12:00:00Z.
+seed: 7
+sat_id: kestrel-7
+heartbeat_s: 2
+time_scale: 20
+dropout_p: 0.02
+initial:
+  bus_voltage: 28.1
+  battery_soc: 0.70
+  attitude_err_deg: 0.25
+  wheel_rpm: 1100
+  temp_c: 18
+  comms_status: nominal
+  fuel_kg: 4.2
+  load_w: 80
+phases:
+  - until_s: 180
+    name: nominal
+    load_w: 80
+    drift_rate_deg_s: 0
+    comms_status: nominal
+  - until_s: 600
+    name: missed_downlink
+    load_w: 140
+    drift_rate_deg_s: 0
+    comms_status: no_carrier
+  - until_s: 100000000
+    name: drift
+    load_w: 320
+    drift_rate_deg_s: 0.0025
+    comms_status: no_carrier
