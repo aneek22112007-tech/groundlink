@@ -1,0 +1,103 @@
+[project]
+name = "groundlink"
+version = "1.0.0"
+description = "Switch-powered mission room for commercial satellite anomaly response."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "aneek22112007-tech" }]
+dependencies = [
+  "alembic>=1.14",
+  "fastapi>=0.115",
+  "fpdf2>=2.8",
+  "httpx>=0.27",
+  "jinja2>=3.1",
+  "pydantic>=2.9",
+  "pyyaml>=6.0",
+  "sqlalchemy>=2.0",
+  "uvicorn>=0.32",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black>=24.10",
+  "hypothesis>=6.120",
+  "mypy>=1.13",
+  "playwright>=1.49",
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.8",
+]
+
+[project.scripts]
+groundlink-context = "agents.context_agent.__main__:main"
+groundlink-options = "agents.options_agent.__main__:main"
+groundlink-action = "agents.action_agent.__main__:main"
+groundlink-sim = "telemetry.simulator:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["core*", "agents*", "telemetry*", "dashboard*", "demo*", "scripts*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["core", "agents", "telemetry", "dashboard", "demo", "scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["agents", "core", "dashboard", "demo", "scripts", "telemetry"]
+
+[tool.ruff.lint.per-file-ignores]
+"alembic/versions/*.py" = ["E402", "I001"]
+"dashboard/app.py" = ["B008"]
+"agents/common/roles.py" = ["UP042"]
+"scripts/replay_demo.py" = ["E402"]
+"scripts/killswitch_demo.py" = ["E402"]
+
+[tool.mypy]
+python_version = "3.11"
+packages = ["core", "agents", "telemetry", "dashboard", "demo"]
+disallow_untyped_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = ["fpdf", "fpdf.*", "yaml"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q -m 'not site'"
+markers = ["site: browser checks for the landing page"]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+  "ignore::starlette.exceptions.StarletteDeprecationWarning",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["core", "agents.common.gate", "agents.common.audit"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+skip_covered = true
+
+[tool.hypothesis]
+max_examples = 40
+deadline = 1500
