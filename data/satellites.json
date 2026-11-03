@@ -1,0 +1,15 @@
+{
+  "satellites": [
+    {
+      "id": "kestrel-7",
+      "name": "Kestrel-7",
+      "altitude_km": 550.0,
+      "inclination_deg": 97.6,
+      "raan_deg": 21.0,
+      "true_anomaly_deg": 0.0,
+      "epoch": "2026-07-14T12:00:00Z",
+      "fuel_capacity_kg": 6.0,
+      "wet_mass_kg": 122.2
+    }
+  ]
+}
