@@ -1,0 +1,13 @@
+.venv
+.git
+.switch
+**/__pycache__
+**/*.db
+logs
+reports
+site
+docs
+tests
+htmlcov
+.pytest_cache
+.mypy_cache
