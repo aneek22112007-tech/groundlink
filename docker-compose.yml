@@ -1,0 +1,94 @@
+include:
+  - path: deploy/switch/standalone-docker-compose.yml
+
+services:
+  mission:
+    build: .
+    command: uvicorn dashboard.app:app --host 0.0.0.0 --port 8090
+    environment:
+      DATABASE_URL: sqlite:////data/groundlink.db
+      DASHBOARD_PUBLIC_URL: http://localhost:8090
+      PERSISTENCE: ${PERSISTENCE:-on}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-gpt-4o-mini}
+      DISCORD_ENABLED: ${DISCORD_ENABLED:-false}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+      TELEGRAM_ENABLED: ${TELEGRAM_ENABLED:-false}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+    volumes:
+      - gldata:/data
+    ports:
+      - "${SWITCH_BIND_ADDR:-127.0.0.1}:8090:8090"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+  simulator:
+    build: .
+    command: python -m telemetry.simulator
+    environment:
+      MISSION_API_URL: http://mission:8090
+      SEED: ${SEED:-7}
+      HEARTBEAT_S: ${HEARTBEAT_S:-2}
+      TIME_SCALE: ${TIME_SCALE:-20}
+    depends_on:
+      mission:
+        condition: service_healthy
+    restart: unless-stopped
+
+  context-agent:
+    build: .
+    command: python -m agents.context_agent
+    environment: &agent-env
+      MISSION_API_URL: http://mission:8090
+      SWITCH_BASE_URL: http://switch:8000
+      AGENT_REGISTRATION_TOKEN: ${AGENT_REGISTRATION_TOKEN:-}
+      SWITCH_ROOM_ID: ${SWITCH_ROOM_ID:-}
+      SWITCH_STATE_DIR: /data/switch-state
+      PERSISTENCE: ${PERSISTENCE:-on}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      DISCORD_ENABLED: ${DISCORD_ENABLED:-false}
+      TELEGRAM_ENABLED: ${TELEGRAM_ENABLED:-false}
+    volumes:
+      - gldata:/data
+    depends_on:
+      mission:
+        condition: service_healthy
+    restart: unless-stopped
+
+  options-agent:
+    build: .
+    command: python -m agents.options_agent
+    environment:
+      <<: *agent-env
+      AGENT_NAME: options-agent
+    volumes:
+      - gldata:/data
+    depends_on:
+      mission:
+        condition: service_healthy
+    restart: unless-stopped
+
+  action-agent:
+    build: .
+    command: python -m agents.action_agent
+    environment:
+      <<: *agent-env
+      AGENT_NAME: action-agent
+      AGENT_HEALTH_PORT: "8093"
+    volumes:
+      - gldata:/data
+    depends_on:
+      mission:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  gldata:
