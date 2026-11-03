@@ -1,0 +1,28 @@
+{
+  "incidents": [
+    {
+      "id": "inc-2026-07-02-kestrel7",
+      "sat_id": "kestrel-7",
+      "title": "2 July eclipse sag",
+      "opened": "2026-07-02T00:00:00Z",
+      "subsystem": "bus_voltage",
+      "summary": "Bus voltage sagged on eclipse exit. Recovered after the pass."
+    },
+    {
+      "id": "inc-2026-07-08-kestrel7",
+      "sat_id": "kestrel-7",
+      "title": "8 July eclipse sag",
+      "opened": "2026-07-08T00:00:00Z",
+      "subsystem": "bus_voltage",
+      "summary": "Bus voltage sagged on eclipse exit. Recovered after the pass."
+    },
+    {
+      "id": "inc-2026-07-11-kestrel7",
+      "sat_id": "kestrel-7",
+      "title": "11 July eclipse sag",
+      "opened": "2026-07-11T00:00:00Z",
+      "subsystem": "bus_voltage",
+      "summary": "Bus voltage sagged on eclipse exit. Recovered after the pass."
+    }
+  ]
+}
