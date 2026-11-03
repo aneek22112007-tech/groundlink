@@ -1,0 +1,15 @@
+[Unit]
+Description=GroundLink stack
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/groundlink
+ExecStart=/usr/bin/docker compose --profile collab --profile gateway up -d
+ExecStop=/usr/bin/docker compose --profile collab --profile gateway down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
