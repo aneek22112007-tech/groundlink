@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GroundLink — who authorised this burn?</title>
+  <meta name="description" content="GroundLink is a Switch-powered mission room. Three agents propose. A named operator authorises. The audit trail is the product.">
+  <meta property="og:title" content="GroundLink">
+  <meta property="og:description" content="A Switch-powered mission room for commercial satellite anomalies.">
+  <meta property="og:image" content="og.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GroundLink">
+  <meta name="twitter:description" content="Three agents propose. A named operator authorises.">
+  <meta name="twitter:image" content="og.jpg">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="static-earth" aria-hidden="true"></div>
+    <canvas id="space"></canvas>
+  </div>
+  <header class="top">
+    <span>GROUNDLINK</span>
+    <button id="sound" type="button" aria-pressed="false">Sound off</button>
+  </header>
+  <section class="hero hud">
+    <h1>Who authorised this burn?</h1>
+    <p class="lede">Three agents sit in the team chat the operators already use. They diagnose and propose. Nothing is transmitted until a named person with the right role signs the thread.</p>
+    <div class="hud-grid">
+      <div class="glass mono" id="readouts">BUS — V</div>
+      <div class="glass"><canvas id="trace" width="640" height="120"></canvas></div>
+      <div class="glass mono ticker">KESTREL-7 · BENGALURU · PASS 3 · AOS +40 MIN</div>
+    </div>
+  </section>
+  <div id="story">
+    <section class="beat" id="anomaly">
+      <h2>The downlink goes quiet.</h2>
+      <p class="lede">Kestrel-7 misses Bengaluru. Attitude starts to walk. Bus voltage falls. The context agent posts one screen: what failed, what still works, and the minutes left before the next pass.</p>
+    </section>
+    <section class="beat" id="agents">
+      <h2>Three agents. No fourth option.</h2>
+      <div class="cards">
+        <article class="glass card"><h3>Context</h3><p>History from the room and the incident log, with a link.</p></article>
+        <article class="glass card"><h3>Options</h3><p>Exactly three proposals. Each one says whether it can be undone.</p></article>
+        <article class="glass card"><h3>Action</h3><p>A command sequence that stays queued until the gate opens.</p></article>
+      </div>
+    </section>
+    <section class="beat" id="gate">
+      <h2>Irreversible means a name.</h2>
+      <p class="stamp">IRREVERSIBLE</p>
+      <p class="lede">Option B spends propellant. Arjun, the mission director, has to type the command-responsibility statement during the pass. Priya confirms. An observer, a stale version, or a late message is refused in the thread.</p>
+    </section>
+    <section class="beat" id="kill">
+      <h2>Turn memory off and the burn never happens.</h2>
+      <p class="lede">The same anomaly, with persistence off, repeats the diagnosis, queues conflicting commands, loses the authorisation that lived only in the room, and the satellite is marked lost.</p>
+    </section>
+    <section class="beat">
+      <h2>The audit trail is the product.</h2>
+      <div class="timeline mono" id="chain">
+        <div>0000… genesis</div>
+        <div class="hash">sha256(prev + approval.recorded)</div>
+        <div class="hash">sha256(prev + command.transmitted)</div>
+        <div class="hash">sha256(prev + mission.recovered)</div>
+      </div>
+    </section>
+    <section class="beat" id="replay">
+      <h2>Kestrel-7, from the demo log.</h2>
+      <div id="replay-log"></div>
+    </section>
+    <section class="beat">
+      <h2>Run the room.</h2>
+      <p><a href="https://github.com/aneek22112007-tech/groundlink">GitHub</a> · <a href="#replay">Room replay</a> · <a href="https://github.com/aneek22112007-tech/groundlink/blob/main/BLOG.md">Blog</a></p>
+    </section>
+  </div>
+  <footer>
+    Earth imagery: NASA Visible Earth Blue Marble and Black Marble, public domain, served from the three-globe example set (MIT). Clouds are drawn in the page. GroundLink does not copy site layouts.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script type="module" src="boot.js"></script>
+</body>
+</html>
