@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ incident.title }}</title>
+  <link rel="stylesheet" href="/static/mission.css">
+</head>
+<body>
+  <header>
+    <div>
+      <div class="wordmark">INCIDENT</div>
+      <h1>{{ incident.title }}</h1>
+    </div>
+    <a href="/">Mission room</a>
+  </header>
+  <main class="panel">
+    <p>{{ incident.summary }}</p>
+    <p class="mono">{{ incident.id }} · {{ incident.subsystem }} · {{ incident.opened }}</p>
+  </main>
+</body>
+</html>
