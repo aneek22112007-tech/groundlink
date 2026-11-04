@@ -15,6 +15,8 @@ COPY room_templates room_templates
 COPY alembic.ini alembic.ini
 COPY alembic alembic
 RUN pip install --no-cache-dir .
-USER groundlink
+COPY deploy/entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 8090
 CMD ["uvicorn", "dashboard.app:app", "--host", "0.0.0.0", "--port", "8090"]
