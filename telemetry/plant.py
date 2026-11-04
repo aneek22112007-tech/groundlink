@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import timedelta
 
 from core.attitude import drift_step, wheel_rpm
@@ -122,3 +122,9 @@ def apply_recovery(plant: Plant, kind: str, fuel_cost_kg: float, variant: str | 
         in_eclipse=previous.in_eclipse,
         load_w=plant.load_w,
     )
+
+
+def spend_fuel(plant: Plant, fuel_cost_kg: float) -> None:
+    """Deduct propellant for a burn step after the recovery mode has started."""
+    previous = plant.sample
+    plant.sample = replace(previous, fuel_kg=round(max(0.0, previous.fuel_kg - fuel_cost_kg), 4))
