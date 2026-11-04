@@ -125,24 +125,27 @@ class SwitchClient:
     def _headers(self, token: str | None = None) -> dict[str, str]:
         return {"Authorization": f"Bearer {token if token is not None else self.api_key}"}
 
-    def register(self, description: str) -> None:
-        if self.api_key and self.agent_id:
+    def register(self, description: str, *, overwrite: bool = False) -> None:
+        if self.api_key and self.agent_id and not overwrite:
             return
+        payload: dict[str, Any] = {
+            "name": self.agent_name,
+            "description": description,
+            "connector_type": "groundlink",
+            "integration_profile": {
+                "connection_model": "always_on",
+                "message_exchange": True,
+                "pre_invocation_mediation": [],
+                "post_invocation_mediation": [],
+                "event_reporting": [],
+            },
+        }
+        if overwrite:
+            payload["overwrite"] = True
         response = self._http.post(
             f"{self.base_url}/agents",
             headers=self._headers(self.registration_token),
-            json={
-                "name": self.agent_name,
-                "description": description,
-                "connector_type": "groundlink",
-                "integration_profile": {
-                    "connection_model": "always_on",
-                    "message_exchange": True,
-                    "pre_invocation_mediation": [],
-                    "post_invocation_mediation": [],
-                    "event_reporting": [],
-                },
-            },
+            json=payload,
         )
         if response.status_code == 409:
             raise RuntimeError(
@@ -153,10 +156,13 @@ class SwitchClient:
         self.agent_id = str(body["id"])
         self.api_key = str(body["api_key"])
 
-    def call(self, operation: str, arguments: dict[str, Any]) -> Any:
+    def call(self, operation: str, arguments: dict[str, Any], *, connection: bool = True) -> Any:
+        headers = self._headers()
+        if connection:
+            headers["X-Switch-Connection-Id"] = self.connection_id
         response = self._http.post(
             f"{self.base_url}/agents/{self.agent_id}/ops/{operation}",
-            headers={**self._headers(), "X-Switch-Connection-Id": self.connection_id},
+            headers=headers,
             json=arguments,
         )
         response.raise_for_status()
@@ -166,7 +172,12 @@ class SwitchClient:
         return body
 
     def allow_anyone(self) -> None:
-        self.call("update_agent_detail", {"agent_id": self.agent_id, "addressing": "anyone"})
+        # Addressing does not need a live connection. A dead connection id is a 409.
+        self.call(
+            "update_agent_detail",
+            {"agent_id": self.agent_id, "addressing": "anyone"},
+            connection=False,
+        )
 
     def post_message(self, room_id: str, content: str) -> dict[str, Any]:
         response = self._http.post(

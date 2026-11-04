@@ -94,10 +94,13 @@ def _switch(kind: str) -> tuple[SwitchClient | None, str]:
                 "action": "Queues the chosen command and transmits it only after the gate.",
             }[kind]
         )
+        if client.api_key:
+            _save_key(name, client.agent_id, client.api_key)
         client.allow_anyone()
-        _save_key(name, client.agent_id, client.api_key)
     except (httpx.HTTPError, RuntimeError, KeyError):
-        if not client.api_key:
+        if client.api_key:
+            _save_key(name, client.agent_id, client.api_key)
+        else:
             return None, ""
     room_id = os.environ.get("SWITCH_ROOM_ID", "") or _load_room()
     return client, room_id
