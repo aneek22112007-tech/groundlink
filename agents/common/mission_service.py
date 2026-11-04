@@ -497,7 +497,8 @@ def _targeted_option(text: str, options: list[Option]) -> Option | None:
     return None
 
 
-def try_transmit_all(session: Session) -> list[dict[str, object]]:
+def try_transmit_all(session: Session, limit: int | None = None) -> list[dict[str, object]]:
+    """Transmit authorised steps in order. `limit` caps how many go out this call."""
     mission = current_mission(session)
     if mission is None:
         return []
@@ -521,6 +522,8 @@ def try_transmit_all(session: Session) -> list[dict[str, object]]:
     )
     outcomes: list[dict[str, object]] = []
     for command in commands:
+        if limit is not None and sum(1 for item in outcomes if item["allowed"]) >= limit:
+            break
         option = session.get(Option, command.option_id)
         if option is None or option.version != mission.option_version:
             outcomes.append(

@@ -119,13 +119,14 @@ def run_action(session: Session) -> str | None:
     moment = sim_now(session)
     if (
         window is not None
+        and not rollback_hold(room_lines(session, mission.id))
         and window.contains(moment)
         and mission.status not in {"lost", "recovered", "closed"}
     ):
         samples = recent_samples(session, limit=2)
         previous = samples[-2].attitude_err_deg if len(samples) > 1 else None
         current_err = samples[-1].attitude_err_deg if samples else 0.0
-        for item in try_transmit_all(session):
+        for item in try_transmit_all(session, limit=1):
             if not item.get("allowed"):
                 continue
             verdict = checkpoint(str(item.get("step", "")), current_err, previous)
@@ -141,9 +142,11 @@ def run_action(session: Session) -> str | None:
                 posted_note = _say(session, mission.id, "Action", "action_agent", note)
                 if posted_note:
                     spoken.append(posted_note)
+                break
     session.refresh(mission)
     samples = recent_samples(session, limit=1)
-    if mission.status == "recovered" and samples:
+    said = [str(line.get("text", "")) for line in room_lines(session, mission.id)]
+    if mission.status == "recovered" and samples and not _already_said(said, "CONFIRMED recovered"):
         sample = samples[-1]
         line = (
             f"CONFIRMED recovered. Attitude error {sample.attitude_err_deg:.2f} deg, "
@@ -152,7 +155,7 @@ def run_action(session: Session) -> str | None:
         posted = _say(session, mission.id, "Action", "action_agent", line)
         if posted:
             spoken.append(posted)
-    if mission.status == "lost":
+    if mission.status == "lost" and not _already_said(said, "No authorisation on record"):
         line = "No authorisation on record. Bus crossed the survival floor. Mission lost."
         posted = _say(session, mission.id, "Action", "action_agent", line)
         if posted:
@@ -160,6 +163,28 @@ def run_action(session: Session) -> str | None:
     if not spoken:
         return None
     return "\n".join(spoken)
+
+
+def _already_said(lines: list[str], prefix: str) -> bool:
+    return any(text.startswith(prefix) for text in lines)
+
+
+ROLLBACK_PREFIX = "ROLLBACK:"
+
+
+def rollback_hold(lines: list[dict[str, object]]) -> bool:
+    """True when the last rollback note has not been cleared by a human "Resume"."""
+    for line in reversed(lines):
+        text = str(line.get("text", ""))
+        if text.startswith(ROLLBACK_PREFIX):
+            return True
+        if text.strip().lower().startswith("resume") and line.get("role") not in {
+            "context_agent",
+            "options_agent",
+            "action_agent",
+        }:
+            return False
+    return False
 
 
 def _queued_keys(session: Session, mission_id: str) -> set[str]:
