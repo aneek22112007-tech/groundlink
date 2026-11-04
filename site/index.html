@@ -4,81 +4,225 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GroundLink — who authorised this burn?</title>
-  <meta name="description" content="GroundLink is a Switch-powered mission room. Three agents propose. A named operator authorises. The audit trail is the product.">
-  <meta property="og:title" content="GroundLink">
-  <meta property="og:description" content="A Switch-powered mission room for commercial satellite anomalies.">
+  <meta name="description" content="GroundLink is a Switch-powered mission room for commercial satellite anomalies. Three agents diagnose and propose. A named operator authorises every irreversible command. The hash-chained audit trail is the product.">
+  <meta name="theme-color" content="#05070d">
+  <meta property="og:title" content="GroundLink — who authorised this burn?">
+  <meta property="og:description" content="Three agents propose. A named operator authorises. The audit trail is the product.">
   <meta property="og:image" content="og.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GroundLink">
-  <meta name="twitter:description" content="Three agents propose. A named operator authorises.">
+  <meta name="twitter:description" content="A Switch-powered, human-governed mission room for satellite anomaly response.">
   <meta name="twitter:image" content="og.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="stage" id="stage">
-    <div class="static-earth" aria-hidden="true"></div>
-    <canvas id="space"></canvas>
-  </div>
-  <header class="top">
-    <span>GROUNDLINK</span>
-    <button id="sound" type="button" aria-pressed="false">Sound off</button>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="GroundLink home">
+      <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="16" cy="16" rx="15" ry="5" fill="none" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-24 16 16)"/><circle cx="28" cy="10.5" r="2.4" fill="var(--accent)"/></svg>
+      <span>GroundLink</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#anomaly">Anomaly</a>
+      <a href="#agents">Agents</a>
+      <a href="#gate">Gate</a>
+      <a href="#kill">Kill-switch</a>
+      <a href="#audit">Audit</a>
+      <a href="#replay">Replay</a>
+    </nav>
+    <a class="btn btn-sm btn-ghost" href="https://github.com/aneek22112007-tech/groundlink" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
   </header>
-  <section class="hero hud">
-    <h1>Who authorised this burn?</h1>
-    <p class="lede">Three agents sit in the team chat the operators already use. They diagnose and propose. Nothing is transmitted until a named person with the right role signs the thread.</p>
-    <div class="hud-grid">
-      <div class="glass mono" id="readouts">BUS — V</div>
-      <div class="glass"><canvas id="trace" width="640" height="120"></canvas></div>
-      <div class="glass mono ticker">KESTREL-7 · BENGALURU · PASS 3 · AOS +40 MIN</div>
-    </div>
-  </section>
-  <div id="story">
-    <section class="beat" id="anomaly">
-      <h2>The downlink goes quiet.</h2>
-      <p class="lede">Kestrel-7 misses Bengaluru. Attitude starts to walk. Bus voltage falls. The context agent posts one screen: what failed, what still works, and the minutes left before the next pass.</p>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span> Kestrel-7 · missed downlink · next pass Bengaluru</p>
+        <h1>Who authorised<br>this <span class="hl">burn?</span></h1>
+        <p class="lede">GroundLink turns the ops team's chat room into a governed mission room. Three agents diagnose and propose. Every option says whether it can be undone. <strong>Nothing irreversible is transmitted until a named operator signs the thread.</strong></p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#replay" data-play>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 2.5v11l9-5.5z"/></svg>
+            Watch the Kestrel-7 replay
+          </a>
+          <a class="btn btn-ghost" href="#run">Run locally</a>
+        </div>
+        <dl class="facts">
+          <div><dt>3</dt><dd>agents in one room</dd></div>
+          <div><dt>1</dt><dd>named human per irreversible command</dd></div>
+          <div><dt>sha256</dt><dd>hash-chained audit trail</dd></div>
+        </dl>
+      </div>
+      <div class="hero-visual">
+        <div class="globe" id="globe">
+          <canvas id="space" aria-label="Animated 3D Earth with Kestrel-7 in orbit" role="img"></canvas>
+          <div class="globe-fallback" aria-hidden="true"></div>
+          <div class="sat-label mono" id="sat-label"><span class="pip"></span>KESTREL-7</div>
+        </div>
+        <aside class="hud glass" id="hud" aria-label="Simulated Kestrel-7 telemetry">
+          <div class="hud-head">
+            <span class="mono">TELEMETRY · KESTREL-7</span>
+            <span class="badge mono" id="hud-state">NOMINAL</span>
+          </div>
+          <div class="hud-grid mono">
+            <div><span>BUS</span><b id="t-bus">28.10</b><i>V</i></div>
+            <div><span>SOC</span><b id="t-soc">72</b><i>%</i></div>
+            <div><span>ATT ERR</span><b id="t-att">0.25</b><i>deg</i></div>
+            <div><span>WHEELS</span><b id="t-rpm">1100</b><i>rpm</i></div>
+            <div><span>COMMS</span><b id="t-comms">nominal</b></div>
+            <div><span>FUEL</span><b id="t-fuel">4.200</b><i>kg</i></div>
+          </div>
+          <canvas id="trace" width="560" height="96" aria-hidden="true"></canvas>
+          <div class="hud-foot mono">
+            <span id="hud-pass">AOS BENGALURU T−36:00</span>
+            <span class="muted">simulated · seed-driven</span>
+          </div>
+        </aside>
+      </div>
+      <a class="scroll-cue mono" href="#anomaly">scroll the incident ↓</a>
     </section>
-    <section class="beat" id="agents">
-      <h2>Three agents. No fourth option.</h2>
+
+    <section class="section" id="anomaly">
+      <div class="split">
+        <div>
+          <p class="kicker mono">01 · The anomaly</p>
+          <h2>The downlink goes quiet.</h2>
+          <p>Kestrel-7 misses its scheduled downlink. Attitude starts to walk and bus voltage falls. The Context agent posts one screen in the room: what failed, what still works, and the minutes left before the next ground-station pass.</p>
+          <p class="muted">It also pulls history the room already remembers: the bus voltage degraded three times this month, each with a link to the incident.</p>
+        </div>
+        <article class="msg glass reveal" aria-label="Context agent message">
+          <header><span class="avatar a-context">C</span><b>Context</b><span class="role mono">context_agent</span><time class="mono">12:04 UTC</time></header>
+          <dl class="kv mono">
+            <dt>Severity</dt><dd class="red">crit</dd>
+            <dt>What is wrong</dt><dd>comms: no carrier on the downlink</dd>
+            <dt>Still works</dt><dd>thermal, battery above survival floor, propulsion, on-board computer</dd>
+            <dt>Latest</dt><dd>bus 27.07 V · SOC 72% · att 0.25° · fuel 4.20 kg</dd>
+            <dt>Next pass</dt><dd>Bengaluru in 36 min · max elev 69°</dd>
+            <dt>History</dt><dd>Bus voltage degraded 3× this month — 2, 8, 11 July eclipse sags</dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="agents">
+      <p class="kicker mono">02 · Three agents, one room</p>
+      <h2>Agents diagnose and propose.<br>Humans authorise.</h2>
       <div class="cards">
-        <article class="glass card"><h3>Context</h3><p>History from the room and the incident log, with a link.</p></article>
-        <article class="glass card"><h3>Options</h3><p>Exactly three proposals. Each one says whether it can be undone.</p></article>
-        <article class="glass card"><h3>Action</h3><p>A command sequence that stays queued until the gate opens.</p></article>
+        <article class="card glass reveal">
+          <span class="avatar a-context">C</span>
+          <h3>Context</h3>
+          <p>Ingests telemetry the moment an alert fires, checks thresholds, and links the satellite's history from room memory.</p>
+          <ul class="mono"><li>threshold diagnosis</li><li>incident history with links</li><li>pass countdown from orbit math</li></ul>
+        </article>
+        <article class="card glass reveal">
+          <span class="avatar a-options">O</span>
+          <h3>Options</h3>
+          <p>Exactly three responses. Numbers come from the simulator, not the model, and each one declares whether it can be undone.</p>
+          <ul class="mono"><li>P(success), fuel, service loss</li><li>REVERSIBLE / IRREVERSIBLE</li><li>re-plans on request</li></ul>
+        </article>
+        <article class="card glass reveal">
+          <span class="avatar a-action">A</span>
+          <h3>Action</h3>
+          <p>Queues the command sequence and holds it at the gate. Walks each step against telemetry and stops on a rollback.</p>
+          <ul class="mono"><li>awaiting_auth until signed</li><li>one step per checkpoint</li><li>post-incident report</li></ul>
+        </article>
       </div>
     </section>
-    <section class="beat" id="gate">
+
+    <section class="section" id="gate">
+      <p class="kicker mono">03 · The irreversibility gate</p>
       <h2>Irreversible means a name.</h2>
-      <p class="stamp">IRREVERSIBLE</p>
-      <p class="lede">Option B spends propellant. Arjun, the mission director, has to type the command-responsibility statement during the pass. Priya confirms. An observer, a stale version, or a late message is refused in the thread.</p>
-    </section>
-    <section class="beat" id="kill">
-      <h2>Turn memory off and the burn never happens.</h2>
-      <p class="lede">The same anomaly, with persistence off, repeats the diagnosis, queues conflicting commands, loses the authorisation that lived only in the room, and the satellite is marked lost.</p>
-    </section>
-    <section class="beat">
-      <h2>The audit trail is the product.</h2>
-      <div class="timeline mono" id="chain">
-        <div>0000… genesis</div>
-        <div class="hash">sha256(prev + approval.recorded)</div>
-        <div class="hash">sha256(prev + command.transmitted)</div>
-        <div class="hash">sha256(prev + mission.recovered)</div>
+      <p class="narrow">Options v2, after Priya rejected A as too slow and asked for a fuel-saving variant of B. Try signing it yourself.</p>
+      <div class="options">
+        <article class="opt glass"><header><b>A</b><span class="tag ok mono">REVERSIBLE</span></header><h3>Magnetorquer desaturation</h3><dl class="mono"><dt>P(success)</dt><dd>0.411</dd><dt>Fuel</dt><dd>0.000 kg</dd><dt>Service loss</dt><dd>3.00 h</dd></dl><p class="muted">Rejected in thread: too slow.</p></article>
+        <article class="opt glass opt-b" id="opt-b"><header><b>B</b><span class="tag bad mono">IRREVERSIBLE</span></header><h3>Fuel-saving RCS recovery, pass 3</h3><dl class="mono"><dt>P(success)</dt><dd>0.491</dd><dt>Fuel</dt><dd>0.196 kg</dd><dt>Reserve after</dt><dd>66.7%</dd></dl><p class="muted">A reaction-control burn expends propellant. It cannot be undone.</p><div class="stamp mono" id="stamp" aria-hidden="true">AUTHORIZED<small>Arjun Mehta · mission_director</small></div></article>
+        <article class="opt glass"><header><b>C</b><span class="tag ok mono">REVERSIBLE</span></header><h3>Safe mode, payload shed</h3><dl class="mono"><dt>P(success)</dt><dd>0.900</dd><dt>Fuel</dt><dd>0.000 kg</dd><dt>Service loss</dt><dd>0.00 h</dd></dl><p class="muted">Mode change. Payload can be restored later.</p></article>
+      </div>
+      <div class="sign glass">
+        <div class="sign-row">
+          <button class="btn btn-ghost" type="button" id="sign-observer">Sign as an observer</button>
+          <button class="btn btn-primary" type="button" id="sign-director">Authorize as Arjun (mission_director)</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="sign-reset">Reset</button>
+        </div>
+        <p class="sign-out mono" id="sign-out" aria-live="polite">Command sequence for B: <b>awaiting_auth</b>. Nothing transmits without a signed statement.</p>
       </div>
     </section>
-    <section class="beat" id="replay">
-      <h2>Kestrel-7, from the demo log.</h2>
-      <div id="replay-log"></div>
+
+    <section class="section" id="kill">
+      <p class="kicker mono">04 · The kill-switch proof</p>
+      <h2>Turn room memory off and the burn never happens.</h2>
+      <p class="narrow">Same anomaly, same seed. <code>PERSISTENCE=off</code> is the only change. From <code>logs/comparison.md</code>.</p>
+      <div class="ks">
+        <div class="ks-col glass on">
+          <header class="mono"><span class="led"></span>Persistence on</header>
+          <ul><li>Incident history cited</li><li>One context card</li><li>One authorised sequence</li><li>Named operators on the audit link</li></ul>
+          <p class="verdict mono">RECOVERED · att 0.75° · fuel 4.004 kg</p>
+        </div>
+        <div class="ks-col glass off" id="ks-off">
+          <header class="mono"><span class="led"></span>Persistence off</header>
+          <ul><li>No room memory</li><li>Duplicated context cards</li><li>Conflicting queued sequences</li><li>No approval row</li></ul>
+          <p class="verdict mono glitch" data-text="LOST · bus crossed survival floor">LOST · bus crossed survival floor</p>
+        </div>
+      </div>
     </section>
-    <section class="beat">
-      <h2>Run the room.</h2>
-      <p><a href="https://github.com/aneek22112007-tech/groundlink">GitHub</a> · <a href="#replay">Room replay</a> · <a href="https://github.com/aneek22112007-tech/groundlink/blob/main/BLOG.md">Blog</a></p>
+
+    <section class="section" id="audit">
+      <p class="kicker mono">05 · The audit trail is the product</p>
+      <h2>"Who authorised this burn?" is one link.</h2>
+      <p class="narrow">Every room message, approval and command is an append-only event. Each row stores <code>sha256(prev_hash + row)</code>, so editing history breaks the chain. These hashes are from the demo log.</p>
+      <ol class="chain mono" id="chain"></ol>
+      <p class="chain-ok mono" id="chain-ok"></p>
     </section>
-  </div>
-  <footer>
-    Earth imagery: NASA Visible Earth Blue Marble and Black Marble, public domain, served from the three-globe example set (MIT). Clouds are drawn in the page. GroundLink does not copy site layouts.
+
+    <section class="section" id="replay">
+      <p class="kicker mono">06 · Kestrel-7, from the demo log</p>
+      <h2>Watch the room work.</h2>
+      <div class="room glass">
+        <div class="room-bar">
+          <span class="mono"># kestrel-7-anomaly</span>
+          <div class="room-ctl">
+            <button class="btn btn-sm btn-ghost" type="button" id="r-play">▶ Play</button>
+            <button class="btn btn-sm btn-ghost" type="button" id="r-step">Step</button>
+            <button class="btn btn-sm btn-ghost" type="button" id="r-all">Show all</button>
+            <button class="btn btn-sm btn-ghost" type="button" id="r-reset">Reset</button>
+          </div>
+        </div>
+        <div class="room-log" id="replay-log" aria-live="polite"></div>
+        <div class="room-progress"><span id="r-bar"></span></div>
+      </div>
+    </section>
+
+    <section class="section cta" id="run">
+      <p class="kicker mono">07 · Run the room</p>
+      <h2>Clone it. Bring it up. Sign the burn.</h2>
+      <div class="code glass">
+        <button class="copy btn btn-sm btn-ghost" type="button" id="copy">Copy</button>
+<pre class="mono"><code id="code">git clone https://github.com/aneek22112007-tech/groundlink
+cd groundlink
+make up      # Switch, Mattermost, agents, simulator, mission API
+make demo    # Kestrel-7 with Priya and Arjun, audit report
+make killswitch   # same anomaly, PERSISTENCE=off</code></pre>
+      </div>
+      <div class="ctas center">
+        <a class="btn btn-primary" href="https://github.com/aneek22112007-tech/groundlink" target="_blank" rel="noopener">View on GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/aneek22112007-tech/groundlink/blob/main/BLOG.md" target="_blank" rel="noopener">Read the blog</a>
+        <a class="btn btn-ghost" href="https://github.com/aneek22112007-tech/groundlink/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>GroundLink · MIT · telemetry on this page is simulated from the repo's Kestrel-7 scenario.</p>
+    <p class="muted">Earth imagery: NASA Blue Marble / Black Marble (public domain) via the three-globe example set; clouds from the three.js examples (MIT).</p>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+
   <script type="module" src="boot.js"></script>
 </body>
 </html>
