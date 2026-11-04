@@ -16,8 +16,10 @@ def _ok(url: str) -> bool:
 
 
 def main() -> None:
-    mission = os.environ.get("MISSION_API_URL", "http://127.0.0.1:8090").rstrip("/") + "/health"
-    switch = os.environ.get("SWITCH_BASE_URL", "http://127.0.0.1:8000").rstrip("/") + "/health"
+    from scripts.envfile import mission_api_url, switch_url
+
+    mission = mission_api_url() + "/health"
+    switch = switch_url() + "/health"
     deadline = time.time() + float(os.environ.get("WAIT_TIMEOUT_S", "180"))
     while time.time() < deadline:
         if _ok(mission):

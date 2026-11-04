@@ -1,32 +1,34 @@
 .PHONY: up down demo killswitch test lint typecheck migrate bootstrap
 
+PY := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
+
 up:
-	python scripts/init_env.py
+	$(PY) -m scripts.init_env
 	docker compose --profile collab --profile gateway up -d --build
-	python scripts/wait_healthy.py
-	python scripts/bootstrap_switch.py
+	$(PY) -m scripts.wait_healthy
+	$(PY) -m scripts.bootstrap_switch
 
 down:
 	docker compose --profile collab --profile gateway down
 
 demo:
-	python -m scripts.replay_demo
+	$(PY) -m scripts.replay_demo
 
 killswitch:
-	python -m scripts.killswitch_demo
+	$(PY) -m scripts.killswitch_demo
 
 test:
-	pytest --cov
+	$(PY) -m pytest --cov
 
 lint:
-	ruff check .
-	black --check .
+	$(PY) -m ruff check .
+	$(PY) -m black --check .
 
 typecheck:
-	mypy
+	$(PY) -m mypy
 
 migrate:
-	alembic upgrade head
+	$(PY) -m alembic upgrade head
 
 bootstrap:
-	python scripts/bootstrap_switch.py
+	$(PY) -m scripts.bootstrap_switch

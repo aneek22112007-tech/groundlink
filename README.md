@@ -53,7 +53,7 @@ make killswitch              # the same anomaly with room memory off
 
 `make up` pulls the Switch images and Mattermost `11.9.0` (`linux/amd64`). The first pull is large. On Apple Silicon, Mattermost runs under emulation.
 
-Dashboard: <http://localhost:8090>. Switch gateway: <http://localhost:3000>. Mattermost: <http://localhost:8065>.
+Dashboard: <http://localhost:8090>. Switch gateway: <http://localhost:3000>. Mattermost: <http://localhost:8065>. Those host ports are `MISSION_HOST_PORT`, `GATEWAY_HOST_PORT`, and `MATTERMOST_HOST_PORT`. The mission container still listens on 8090.
 
 If the heartbeat is not already running, `make demo` starts a local simulator and an agent poller against the mission API. Human lines are posted to that API. They are also posted to Mattermost when `MATTERMOST_USER_PASSWORD` and `MATTERMOST_CHANNEL_ID` are set.
 

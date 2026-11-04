@@ -12,6 +12,7 @@ from typing import Any
 import httpx
 
 from agents.common.irreversibility import command_statement
+from scripts.envfile import mattermost_url, mission_api_url
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIYA_REJECT = "Option A is too slow. We cannot wait out a magnetorquer desat."
@@ -79,7 +80,7 @@ def ingest(client: httpx.Client, author: str, text: str, message_id: str) -> Non
 
 
 def _mattermost(author: str, text: str) -> None:
-    base = os.environ.get("MATTERMOST_URL", "http://127.0.0.1:8065").rstrip("/")
+    base = mattermost_url()
     username = (
         "priya"
         if author.lower().startswith("priya")
@@ -109,7 +110,7 @@ def _mattermost(author: str, text: str) -> None:
 def run_live(
     *, persistence: bool, humans: bool, time_scale: float, timeout_s: float
 ) -> dict[str, Any]:
-    base = os.environ.get("MISSION_API_URL", "http://127.0.0.1:8090").rstrip("/")
+    base = mission_api_url()
     client = wait_api(base)
     created = client.post(
         "/api/reset",

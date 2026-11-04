@@ -8,7 +8,9 @@ import httpx
 
 
 def main() -> None:
-    base = os.environ.get("MISSION_API_URL", "http://127.0.0.1:8090").rstrip("/")
+    from scripts.envfile import mission_api_url
+
+    base = mission_api_url()
     response = httpx.post(
         f"{base}/api/reset",
         json={"persistence": True, "seed": int(os.environ.get("SEED", "7")), "time_scale": 20},

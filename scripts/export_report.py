@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 import httpx
@@ -11,7 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
-    base = os.environ.get("MISSION_API_URL", "http://127.0.0.1:8090").rstrip("/")
+    from scripts.envfile import mission_api_url
+
+    base = mission_api_url()
     client = httpx.Client(timeout=60)
     state = client.get(f"{base}/api/state").json()
     mission = state.get("mission") or {}

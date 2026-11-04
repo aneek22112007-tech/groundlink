@@ -22,19 +22,16 @@ AGENTS = (
 
 
 def _load_env() -> None:
-    path = ROOT / ".env"
-    if not path.exists():
-        return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip())
+    from scripts.envfile import load_env
+
+    load_env()
 
 
 def main() -> None:
     _load_env()
-    base = os.environ.get("SWITCH_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
+    from scripts.envfile import switch_url
+
+    base = switch_url()
     token = os.environ.get("AGENT_REGISTRATION_TOKEN", "")
     state = Path(os.environ.get("SWITCH_STATE_DIR", str(ROOT / ".switch")))
     state.mkdir(parents=True, exist_ok=True)
@@ -81,7 +78,9 @@ def main() -> None:
 
 
 def _mattermost() -> None:
-    base = os.environ.get("MATTERMOST_URL", "http://127.0.0.1:8065").rstrip("/")
+    from scripts.envfile import mattermost_url
+
+    base = mattermost_url()
     admin = os.environ.get("MATTERMOST_ADMIN_USER", "admin")
     password = os.environ.get("MATTERMOST_ADMIN_PASSWORD", "")
     if not password:

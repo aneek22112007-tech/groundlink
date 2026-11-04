@@ -7,7 +7,7 @@ services:
     command: uvicorn dashboard.app:app --host 0.0.0.0 --port 8090
     environment:
       DATABASE_URL: sqlite:////data/groundlink.db
-      DASHBOARD_PUBLIC_URL: http://localhost:8090
+      DASHBOARD_PUBLIC_URL: ${DASHBOARD_PUBLIC_URL:-http://localhost:8090}
       PERSISTENCE: ${PERSISTENCE:-on}
       LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
       LLM_API_KEY: ${LLM_API_KEY:-}
@@ -20,7 +20,7 @@ services:
     volumes:
       - gldata:/data
     ports:
-      - "${SWITCH_BIND_ADDR:-127.0.0.1}:8090:8090"
+      - "${SWITCH_BIND_ADDR:-127.0.0.1}:${MISSION_HOST_PORT:-8090}:8090"
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health')"]
       interval: 5s
