@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -10,9 +11,7 @@ def test_alembic_upgrade_creates_the_mission_table(tmp_path: Path) -> None:
     env = os.environ.copy()
     env["DATABASE_URL"] = url
     root = Path(__file__).resolve().parents[1]
-    subprocess.check_call(
-        [str(root / ".venv" / "bin" / "alembic"), "upgrade", "head"], cwd=root, env=env
-    )
+    subprocess.check_call([sys.executable, "-m", "alembic", "upgrade", "head"], cwd=root, env=env)
     import sqlite3
 
     connection = sqlite3.connect(tmp_path / "migrate.db")
