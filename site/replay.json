@@ -5,80 +5,86 @@
     {
       "who": "Context",
       "role": "context_agent",
-      "ts": "2026-07-14T12:03:30+00:00",
-      "text": "CONTEXT Kestrel-7\nSeverity: crit. Onset: 2026-07-14T12:03:30Z.\nWhat is wrong: comms: no carrier on the downlink.\nWhat still works: thermal control, battery above the survival floor, propulsion still has propellant, on-board computer (no downlink, bus still reporting locally).\nLatest: bus 26.98 V, SOC 72%, attitude error 0.24 deg, wheels 1114 rpm, temp 18.0 C, comms no_carrier, fuel 4.20 kg.\nNext pass: Bengaluru in 36 min (AOS 2026-07-14T12:39:45Z, LOS 2026-07-14T12:49:30Z, max elevation 69 deg).\u2026"
+      "ts": "2026-07-14T12:04:00+00:00",
+      "hash": "0dfe42d3cf9da9efad048fce8c5b2450e91405a7d02fe832173964a1745d0b23",
+      "text": "CONTEXT Kestrel-7\nSeverity: crit. Onset: 2026-07-14T12:04:00Z.\nWhat is wrong: comms: no carrier on the downlink.\nWhat still works: thermal control, battery above the survival floor, propulsion still has propellant, on-board computer (no downlink, bus still reporting locally).\nLatest: bus 27.07 V, SOC 72%, attitude error 0.25 deg, wheels 1121 rpm, temp 18.0 C, comms no_carrier, fuel 4.20 kg.\nNext pass: Bengaluru in 36 min (AOS 2026-07-14T12:39:45Z, LOS 2026-07-14T12:49:30Z, max elevation 69 deg).\nBus voltage degraded 3 times this month. See 2 July eclipse sag (http://localhost:8090/incidents/inc-2026-07-02-kestrel7), 8 July eclipse sag (http://localhost:8090/incidents/inc-2026-07-08-kestrel7), 11 July eclipse sag (http://localhost:8090/incidents/inc-2026-07-11-kestrel7)."
     },
     {
       "who": "Options",
       "role": "options_agent",
-      "ts": "2026-07-14T12:03:30+00:00",
-      "text": "OPTIONS v1\nThree options. The figures are from the simulator, not the model.\nOption A \u2014 Magnetorquer desaturation on the next pass [REVERSIBLE]. P(success) 0.450. Power 0.0 Wh. Fuel 0.000 kg (reserve 70.0%). Service loss 2.99 h. Magnetorquer torque can be removed. No propellant is spent and the previous wheel state stays reachable. Option A (Magnetorquer desaturation on the next pass) is REVERSIBLE. Simulated minimum bus voltage 26.86 V, ending attitude error 43.92 deg, propellant 0.000 kg, serv\u2026"
+      "ts": "2026-07-14T12:04:00+00:00",
+      "hash": "9cea7e0d4a996875af15d45c3151d0521dfa9083a65a70967679b1b9fcd21341",
+      "text": "OPTIONS v1\nThree options. The figures are from the simulator, not the model.\nOption A \u2014 Magnetorquer desaturation on the next pass [REVERSIBLE]. P(success) 0.450. Power 0.0 Wh. Fuel 0.000 kg (reserve 70.0%). Service loss 2.99 h. Magnetorquer torque can be removed. No propellant is spent and the previous wheel state stays reachable. Option A (Magnetorquer desaturation on the next pass) is REVERSIBLE. Simulated minimum bus voltage 26.88 V, ending attitude error 43.93 deg, propellant 0.000 kg, service loss 2.99 h, next geometry Bengaluru.\nOption B \u2014 RCS attitude recovery on pass 3 [IRREVERSIBLE]. P(success) 0.530. Power 0.0 Wh. Fuel 0.496 kg (reserve 61.7%). Service loss 2.85 h. A reaction-control burn expends propellant and changes orbital velocity. Neither can be undone. Option B (RCS attitude recovery on pass 3) is IRREVERSIBLE. Simulated minimum bus voltage 27.03 V, ending attitude erro\u2026"
     },
     {
       "who": "Priya Raman",
       "role": "flight_ops_engineer",
-      "ts": "2026-07-14T12:15:30+00:00",
+      "ts": "2026-07-14T12:15:20+00:00",
+      "hash": "06f815cbca9eb20c29530a15b32dcc827b7ea58c755564b82c65d3de39b5d311",
       "text": "Option A is too slow. We cannot wait out a magnetorquer desat."
     },
     {
       "who": "Priya Raman",
       "role": "flight_ops_engineer",
-      "ts": "2026-07-14T12:15:30+00:00",
+      "ts": "2026-07-14T12:15:20+00:00",
+      "hash": "8c449d68cead389eed39c84647338da71a56c622535b9060539f29d9f44c5087",
       "text": "Request a fuel-saving variant of Option B."
     },
     {
       "who": "Options",
       "role": "options_agent",
-      "ts": "2026-07-14T12:15:30+00:00",
-      "text": "OPTIONS v2\nThree options. The figures are from the simulator, not the model.\nOption A \u2014 Magnetorquer desaturation on the next pass [REVERSIBLE]. P(success) 0.411. Power 0.0 Wh. Fuel 0.000 kg (reserve 70.0%). Service loss 3.00 h. Magnetorquer torque can be removed. No propellant is spent and the previous wheel state stays reachable. Option A (Magnetorquer desaturation on the next pass) is REVERSIBLE. Simulated minimum bus voltage 25.37 V, ending attitude error 44.24 deg, propellant 0.000 kg, serv\u2026"
+      "ts": "2026-07-14T12:15:20+00:00",
+      "hash": "fcd08a36a1c4cc086324a26f04e4ff6f757849694be7dc96458a49d4ecc469e8",
+      "text": "OPTIONS v2\nThree options. The figures are from the simulator, not the model.\nOption A \u2014 Magnetorquer desaturation on the next pass [REVERSIBLE]. P(success) 0.411. Power 0.0 Wh. Fuel 0.000 kg (reserve 70.0%). Service loss 3.00 h. Magnetorquer torque can be removed. No propellant is spent and the previous wheel state stays reachable. Option A (Magnetorquer desaturation on the next pass) is REVERSIBLE. Simulated minimum bus voltage 25.39 V, ending attitude error 44.27 deg, propellant 0.000 kg, service loss 3.00 h, next geometry Bengaluru.\nOption B \u2014 Fuel-saving RCS recovery on pass 3 [IRREVERSIBLE]. P(success) 0.491. Power 0.0 Wh. Fuel 0.196 kg (reserve 66.7%). Service loss 2.97 h. A reaction-control burn expends propellant and changes orbital velocity. Neither can be undone. Option B (Fuel-saving RCS recovery on pass 3) is IRREVERSIBLE. Simulated minimum bus voltage 25.39 V, ending attitud\u2026"
     },
     {
       "who": "Arjun Mehta",
       "role": "mission_director",
       "ts": "2026-07-14T12:40:00+00:00",
+      "hash": "f47e782029f488dd50300511cce627a090c5bb1e8ff22fc8f9557fc62c1ce0be",
       "text": "Authorized \u2014 Option B, firing on pass 3, I am taking command responsibility"
     },
     {
       "who": "Priya Raman",
       "role": "flight_ops_engineer",
       "ts": "2026-07-14T12:40:00+00:00",
+      "hash": "ee854f7de1e8d49907437bf60f4f2f9f86539ca83c5900d93fe1bfe85f3b0afa",
       "text": "Confirmed \u2014 Option B. Second operator confirmation."
     },
     {
       "who": "Action",
       "role": "action_agent",
       "ts": "2026-07-14T12:40:00+00:00",
+      "hash": "ec27e97e81ca2aec1d3078ca087dcc7edf2217fea118a8c81a38f91128ed58e3",
       "text": "TRANSMITTED seq 1 arm_rcs {\"kind\": \"rcs\", \"option\": \"B\", \"version\": \"2\", \"variant\": \"fuel-saving\", \"thruster\": \"RCS-A\", \"note\": \"arm is reversible until the pulse\"} (continue)"
     },
     {
       "who": "Action",
       "role": "action_agent",
       "ts": "2026-07-14T12:40:00+00:00",
+      "hash": "2b74a7332f753b20e8fb21e64f3d966069cfaa80a8626cc8e65b66ca258df744",
       "text": "TRANSMITTED seq 2 fire_pulse {\"kind\": \"rcs\", \"option\": \"B\", \"version\": \"2\", \"variant\": \"fuel-saving\", \"fuel_cost_kg\": \"0.196\", \"note\": \"propellant expenditure, irreversible\"} (continue)"
     },
     {
       "who": "Action",
       "role": "action_agent",
-      "ts": "2026-07-14T12:40:00+00:00",
-      "text": "TRANSMITTED seq 3 verify_rate {\"kind\": \"rcs\", \"option\": \"B\", \"version\": \"2\", \"variant\": \"fuel-saving\", \"expect\": \"attitude error decreasing\"} (rollback)"
+      "ts": "2026-07-14T12:40:40+00:00",
+      "hash": "d4d758d0be9c39182f921f3374070d4288b5be55bc1ca14b29c1afb73687f989",
+      "text": "TRANSMITTED seq 3 verify_rate {\"kind\": \"rcs\", \"option\": \"B\", \"version\": \"2\", \"variant\": \"fuel-saving\", \"expect\": \"attitude error decreasing\"} (continue)"
     },
     {
       "who": "Action",
       "role": "action_agent",
-      "ts": "2026-07-14T12:40:00+00:00",
-      "text": "ROLLBACK: attitude error grew after the pulse. Hold the next step."
-    },
-    {
-      "who": "Action",
-      "role": "action_agent",
-      "ts": "2026-07-14T12:40:00+00:00",
+      "ts": "2026-07-14T12:41:20+00:00",
+      "hash": "c5fcfac4e3575dc0334db6f82352c9129f2f5d31fa8d71d57d0e56f52eeed8d9",
       "text": "TRANSMITTED seq 4 restore_downlink {\"kind\": \"rcs\", \"option\": \"B\", \"version\": \"2\", \"variant\": \"fuel-saving\", \"note\": \"return the payload if the bus allows\"} (continue)"
     },
     {
       "who": "Action",
       "role": "action_agent",
-      "ts": "2026-07-14T12:43:30+00:00",
-      "text": "CONFIRMED recovered. Attitude error 0.45 deg, bus 25.67 V, fuel 4.004 kg."
+      "ts": "2026-07-14T12:43:20+00:00",
+      "hash": "2b151ccbcae5434c0af821a266837ed87cb7970b7b69f467ae3e6a2f5e66b0b2",
+      "text": "CONFIRMED recovered. Attitude error 0.75 deg, bus 25.67 V, fuel 4.004 kg."
     }
   ]
 }
